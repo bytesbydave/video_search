@@ -31,6 +31,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="ui container">
+        {process.env.REACT_APP_YOUTUBE_API_KEY}
         <SearchBar onFormSubmit={this.onTermSubmit} />
         <div className="ui grid">
           <div className="ui row">
