@@ -8,7 +8,7 @@ const VideoItem = ({ video, onVideoSelect }) => {
       <div className="content">
         <div className="header">
           <h4>
-            {video.snippet.title} 
+            {video.snippet.title}
           </h4>
         </div>
       </div>

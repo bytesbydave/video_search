@@ -25,7 +25,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.onTermSubmit('programming');
+    this.onTermSubmit('coffee');
   }
 
   render() {
