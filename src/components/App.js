@@ -3,6 +3,7 @@ import youtube from '../api/youtube';
 import SearchBar from './SearchBar';
 import VideoList from './VideoList';
 import VideoDetail from './VideoDetail';
+import './App.css';
 
 class App extends React.Component {
   state = { videos: [], selectedVideo: null };
@@ -17,7 +18,6 @@ class App extends React.Component {
       videos: response.data.items,
       selectedVideo: response.data.items[0] 
     });
-
   };
 
   onVideoSelect = (video) => {
@@ -30,14 +30,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="ui container">
+      <div className="ui container top-contain">
         <SearchBar onFormSubmit={this.onTermSubmit} />
-        <div className="ui grid">
+        <div className="ui stackable grid">
           <div className="ui row">
-            <div className="eleven wide column">
+            <div className="ten wide column">
               <VideoDetail video={this.state.selectedVideo} />
             </div>
-            <div className="five wide column">
+            <div className="six wide column">
               <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect} />
             </div>
           </div>
