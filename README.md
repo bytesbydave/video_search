@@ -23,8 +23,7 @@ npm install
 
 Change Youtube API
 
-Get a YouTube API key from [here](https://developers.google.com/
-youtube/)
+Get a YouTube API key from [here](https://developers.google.com/youtube/)
 ```
 Replace process.env.REACT_APP_YOUTUBE_API_KEY with the API Key
 ```
