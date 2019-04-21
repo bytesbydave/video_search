@@ -1,19 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { selectVideo } from '../actions';
 import './VideoItem.css';
 
 const VideoItem = ({ video, onVideoSelect }) => {
-  return(
+  return (
     <div onClick={() => onVideoSelect(video)} className="video-item item">
-      <img className="ui image" src={video.snippet.thumbnails.medium.url} alt={video.snippet.title} />
+      <img
+        className="ui image"
+        src={video.snippet.thumbnails.medium.url}
+        alt={video.snippet.title}
+      />
       <div className="content">
         <div className="header">
-          <h4>
-            {video.snippet.title}
-          </h4>
+          <h4>{video.snippet.title}</h4>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default VideoItem;
+const mapDispatchToProps = dispatch => {
+  return {
+    onVideoSelect: event => dispatch(selectVideo(event))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(VideoItem);

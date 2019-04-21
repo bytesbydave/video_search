@@ -1,18 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { requestVideos, setSearchField } from '../actions';
 import './SearchBar.css';
 
 class SearchBar extends React.Component {
-  // state = { term: '' };
-
-  // onInputChange = (event) => {
-  //   this.setState({ term: event.target.value });
-  // };
-
-  // onFormSubmit = (event) => {
-  //   event.preventDefault();
-  //   this.props.onFormSubmit(this.state.term);
-  // };
+  componentDidMount() {
+    this.props.onTermSubmit('coffee');
+  }
 
   render() {
     const { searchField, onSearchChange, onTermSubmit } = this.props;
@@ -30,7 +24,6 @@ class SearchBar extends React.Component {
             <div className="search-contain">
               <button
                 onClick={() => onTermSubmit(searchField)}
-                value={searchField}
                 className="ui primary button search-btn"
               >
                 Search
@@ -43,4 +36,20 @@ class SearchBar extends React.Component {
   }
 }
 
-export default SearchBar;
+const mapStateToProps = state => {
+  return {
+    searchField: state.searchVideos.searchField
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTermSubmit: event => dispatch(requestVideos(event)),
+    onSearchChange: event => dispatch(setSearchField(event.target.value))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchBar);
