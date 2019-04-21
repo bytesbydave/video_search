@@ -1,44 +1,38 @@
 import React from 'react';
-import youtube from '../api/youtube';
+import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
 import VideoList from './VideoList';
 import VideoDetail from './VideoDetail';
 import './App.css';
+import { requestVideos, setSearchField, selectVideo } from '../actions';
 
 class App extends React.Component {
-  state = { videos: [], selectedVideo: null };
-
-  onTermSubmit = async (term) => {
-    const response = await youtube.get('/search', {
-      params: {
-        q: term
-      }
-    });
-    this.setState({ 
-      videos: response.data.items,
-      selectedVideo: response.data.items[0] 
-    });
-  };
-
-  onVideoSelect = (video) => {
-    this.setState({ selectedVideo: video });
-  };
-
   componentDidMount() {
-    this.onTermSubmit('coffee');
+    this.props.onTermSubmit('coffee');
   }
 
   render() {
+    const {
+      searchField,
+      onSearchChange, onTermSubmit,
+      videos,
+      onVideoSelect,
+      selectedVideo
+    } = this.props;
     return (
       <div className="ui container top-contain">
-        <SearchBar onFormSubmit={this.onTermSubmit} />
+        <SearchBar
+          onTermSubmit={onTermSubmit}
+          onSearchChange={onSearchChange}
+          searchField={searchField}
+        />
         <div className="ui stackable grid">
           <div className="ui row">
             <div className="ten wide column">
-              <VideoDetail video={this.state.selectedVideo} />
+              <VideoDetail video={selectedVideo} />
             </div>
             <div className="six wide column">
-              <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect} />
+              <VideoList videos={videos} onVideoSelect={onVideoSelect} />
             </div>
           </div>
         </div>
@@ -47,4 +41,25 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    videos: state.requestVideos.videos,
+    isPending: state.requestVideos.isPending,
+    error: state.requestVideos.error,
+    searchField: state.searchVideos.searchField,
+    selectedVideo: state.selectVideo.selectedVideo
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTermSubmit: event => dispatch(requestVideos(event)),
+    onSearchChange: event => dispatch(setSearchField(event.target.value)),
+    onVideoSelect: event => dispatch(selectVideo(event))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
