@@ -2,7 +2,8 @@ import {
   CHANGE_SEARCH_FIELD,
   REQUEST_VIDEOS_PENDING,
   REQUEST_VIDEOS_SUCCESS,
-  REQUEST_VIDEOS_FAILED
+  REQUEST_VIDEOS_FAILED,
+  SELECT_VIDEO
 } from '../actions/types';
 
 const initialStateSearch = {
@@ -14,6 +15,10 @@ const initialStateVideos = {
   error: '',
   videos: []
 };
+
+const initialStateSelectedVideo = {
+  selectedVideo: null
+}
 
 export const searchVideos = (state = initialStateSearch, action = {}) => {
   switch (action.type) {
@@ -36,3 +41,12 @@ export const requestVideos = (state = initialStateVideos, action = {}) => {
       return state;
   }
 };
+
+export const selectVideo = (state=initialStateSelectedVideo, action={}) => {
+  switch (action.type) {
+    case SELECT_VIDEO:
+      return { ...state, selectedVideo: action.payload }
+    default:
+      return state;
+  }
+}
