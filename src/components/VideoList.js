@@ -1,16 +1,27 @@
 import React from 'react';
 import VideoItem from './VideoItem';
+import { connect } from 'react-redux';
 
-const VideoList = ({ videos, onVideoSelect }) => {
-  const renderedList = videos.map((video) => {
-    return <VideoItem video={video} onVideoSelect={onVideoSelect} key={video.id.videoId} />
+const VideoList = ({ videos, isPending, error }) => {
+  const renderedList = videos.map(video => {
+    return <VideoItem video={video} key={video.id.videoId} />;
   });
 
-  return(
-    <div className="ui relaxed divided list">
-      {renderedList}
-    </div>
-  );
+  if (isPending) {
+    return <div>Loading</div>;
+  } else if (error) {
+    return <div>error</div>;
+  } else {
+    return <div className="ui relaxed divided list">{renderedList}</div>;
+  }
 };
 
-export default VideoList;
+const mapStateToProps = state => {
+  return {
+    videos: state.requestVideos.videos,
+    isPending: state.requestVideos.isPending,
+    error: state.requestVideos.error
+  };
+};
+
+export default connect(mapStateToProps)(VideoList);
