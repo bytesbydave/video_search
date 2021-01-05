@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://dvdlin214.github.io/video_search",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "dotenv": "^6.1.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
